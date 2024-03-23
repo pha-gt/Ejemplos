@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var lista;
+        function cargar_telas(){
+            //Declaramos una nueva instancia de XMLHttpRequest
+            let xhr = new XMLHttpRequest();
+            let respuesta;
+
+            //Esta función se ejecutará tras la petición
+            xhr.onload = function () {
+                //Si la petición es exitosa
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    //Mostramos un mensaje de exito y el contenido de la respuesta
+                    //console.log( xhr.response);
+                    respuesta = xhr.response;
+                    //Guardar en lista de mascotas convertida en objetos
+                    console.log(respuesta);
+                    //
+                    lista = JSON.parse(respuesta);
+                   alert(respuesta);
+                } else {
+                    //Si la conexión falla
+                    console.log('Error en la petición!');
+                    alert("Fracaso");
+                    return;
+                }
+            }
+
+            //Por el primer parametro enviamos el tipo de petición (GET, POST, PUT, DELETE)
+            //Por el segundo parametro la url de la API
+            xhr.open('GET', "./API/Telas.php");
+            //Se envía la petición
+            xhr.send();
+        }
+
+        function registrar_tela(){
+            let input_nombre = document.getElementById('input_nombre');
+            let valor_nombre = input_nombre.value;
+            let input_pais = document.getElementById('input_pais');
+            let valor_pais = input_pais.value;
+
+            let nueva_tela = {
+                nombre:valor_nombre,
+                pais:valor_pais
+            };
+
+
+
+            let xhr = new XMLHttpRequest();
+            let respuesta;
+
+            //Esta función se ejecutará tras la petición
+            xhr.onload = function () {
+                //Si la petición es exitosa
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    //Mostramos un mensaje de exito y el contenido de la respuesta
+                    //console.log( xhr.response);
+                    respuesta = xhr.response;
+                    //Guardar en lista de mascotas convertida en objetos
+                    console.log(respuesta);
+                    //
+                    lista = JSON.parse(respuesta);
+                   alert(respuesta);
+                } else {
+                    //Si la conexión falla
+                    console.log('Error en la petición!');
+                    alert("Fracaso");
+                    return;
+                }
+            }
+
+            //Por el primer parametro enviamos el tipo de petición (GET, POST, PUT, DELETE)
+            //Por el segundo parametro la url de la API
+            xhr.open('POST', "./API/Telas.php");
+            //Se envía la petición con texto
+            //xhr.send("{\"nombre\":\"PALMERA\",\"pais\":\"china\"}");
+
+            xhr.send(JSON.stringify(nueva_tela));
+        }
+
+    </script>
+</head>
+<body>
+<button onclick="cargar_telas();">Cargar</button>
+
+<hr>
+Nombre <input id="input_nombre">
+Pais <input id="input_pais">
+<button onclick="registrar_tela();">Registrar</button>
+
+    
+</body>
+</html>
